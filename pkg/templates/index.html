@@ -1,0 +1,70 @@
+  
+<html>
+	<head>
+        <title>Poke Your Friends</title>
+        <link rel="icon" href="/static/poke.png" type="image/gif" sizes="16x16">
+        <link rel="stylesheet" type="text/css" href="/static/index.css">
+	</head>
+	<body>
+		<!-- <nav></nav> -->
+		<main>
+            
+            <div class="card">
+                <div id="create-form" class="container">
+                    <h1>Send a Poke</h1>
+                    <form action="/" method="POST">
+                        <div>
+                            <label for="sender_name">Sender name:&nbsp;&nbsp;&nbsp;</label>
+                            <input type="text" id="sender_name" name="sender_name" value=""><br>
+                            <label for="recceiver_name">Receiver name:</label>
+                            <input type="text" id="recceiver_name" name="receiver_name" value=""><br>
+                            <label for="receiver_email">Receiver email:</label>
+                            <input type="email" id="receiver_email" name="receiver_email" value="" required><br>
+                            <label for="message">Poke message:</label><br>
+                            <textarea name="message"></textarea>
+
+                            <label>Make poke public? (email will stay private)</label> <br>
+                            <input type="radio" id="public_yes" name="public" value="1" required>
+                            <label for="public_yes">yes</label>
+                            <input type="radio" id="public_no" name="public" value="0">
+                            <label for="public_no">no</label><br><br>
+                                                
+                            <input type="submit" value="Send Poke">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="container">
+                {{ range .List }}
+                {{ if .IsPublic }}
+                    <div class="transaction">
+                        <div class="left">
+                            <img src="/static/poke.png" width="70" height="60">
+                        </div>
+                        <div class="right">
+                            <div class="action">
+                                <span>{{ .SenderName }}</span> poked <span>{{ .ReceiverName }}</span>
+                            </div>
+                            <div class="description">
+                                {{ .Message }}
+                            </div>
+                        </div>
+                        <div class="date">
+                            <span>{{ .DateSent.Format "Jan 02, 2006 15:04 UTC" }}</span>
+                        </div>
+                    </div>
+
+                    <!-- <div>Sender: {{ .SenderName }}, Receiver: {{ .ReceiverName }}, Message: {{ .Message }}, Date: {{ .DateSent.Format "Jan 02, 2006 15:04 UTC" }}</div> -->   
+                {{ end }}
+                {{ end }}
+                </div>
+                
+            </div>
+        </main>
+        <footer>
+            <a href="/about">about</a>
+        </footer>
+        
+	</body>
+</html>
